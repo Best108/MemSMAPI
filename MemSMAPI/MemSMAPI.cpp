@@ -89,8 +89,30 @@ MemSMAPI::ScanResult MemSMAPI::ScanForBytes(LPCVOID* addresses, SIZE_T sizeAddre
 	if (MemSMAPI::IsMemSMAPIInitialized()) {
 		std::vector<LPVOID> result;
 
-		//Convert the addresses to an std::vector
+		//Convert the addresses to an std::vector and scan
 		result = memSM->ScanForBytes(std::vector<LPCVOID>(addresses, addresses + sizeAddresses), bytes, bytesSize);
+
+		//Store the results in a simple array
+		if (result.size() > 0) {
+			scanResult.size = result.size();
+			scanResult.result = new LPVOID[scanResult.size];
+
+			memcpy(scanResult.result, result.data(), scanResult.size * sizeof(LPVOID));
+		}
+	}
+
+	return scanResult;
+}
+
+MemSMAPI::ScanResult MemSMAPI::ScanForPattern(LPCVOID startAddress, LPCVOID endAddress, LPCBYTE bytes, SIZE_T bytesSize, LPDWORD ignoreIndices, SIZE_T ignoreIndicesSize)
+{
+	ScanResult scanResult { 0, nullptr };
+
+	if (MemSMAPI::IsMemSMAPIInitialized()) {
+		std::vector<LPVOID> result;
+
+		//Convert the addresses and indices to an std::vector and scan
+		result = memSM->ScanForPattern(startAddress, endAddress, bytes, bytesSize, std::vector<DWORD>(ignoreIndices, ignoreIndices + ignoreIndicesSize));
 
 		//Store the results in a simple array
 		if (result.size() > 0) {

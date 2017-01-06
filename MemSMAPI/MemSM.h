@@ -56,7 +56,7 @@ public:
 	static void DeleteMemoryMap(MemoryMap memoryMap);
 
 	/*
-		Scans for numberOfBytes bytes pointed to by the pointer bytes in the range startAddress and endAddress.
+		Scans for bytesSize bytes pointed to by the pointer bytes in the range startAddress and endAddress.
 	*/
 	std::vector<LPVOID> ScanForBytes(LPCVOID startAddress, LPCVOID endAddress, LPCBYTE bytes, SIZE_T bytesSize) const;
 
@@ -64,7 +64,12 @@ public:
 		Goes through all the address and checks if the bytes at each address equals the bytes parameter.
 		The ones that equal the parameter will be returned as a new vector.
 	*/
-	std::vector<LPVOID> ScanForBytes(std::vector<LPCVOID> addresses, LPCBYTE bytes, SIZE_T bytesSize) const;
+	std::vector<LPVOID> ScanForBytes(const std::vector<LPCVOID>& addresses, LPCBYTE bytes, SIZE_T bytesSize) const;
+
+	/*
+		Scans for bytesSize bytes pointed to by the pointer bytes in the range startAddress and endAddress and ignores ignoreIndices.
+	*/
+	std::vector<LPVOID> ScanForPattern(LPCVOID startAddress, LPCVOID endAddress, LPCBYTE bytes, SIZE_T bytesSize, const std::vector<DWORD>& ignoreIndices) const;
 
 private:
 	HANDLE processHandle;

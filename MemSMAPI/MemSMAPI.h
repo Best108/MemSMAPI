@@ -43,6 +43,8 @@ namespace MemSMAPI
 	extern __declspec(dllexport) ScanResult __cdecl ScanForBytes(LPCVOID startAddress, LPCVOID endAddress, LPCBYTE bytes, SIZE_T bytesSize);
 
 	extern __declspec(dllexport) ScanResult __cdecl ScanForBytes(LPCVOID* addresses, SIZE_T sizeAddresses, LPCBYTE bytes, SIZE_T bytesSize);
+
+	extern "C" __declspec(dllexport) ScanResult __cdecl ScanForPattern(LPCVOID startAddress, LPCVOID endAddress, LPCBYTE bytes, SIZE_T bytesSize, LPDWORD ignoreIndices, SIZE_T ignoreIndicesSize);
 	
 	extern __declspec(dllexport) void __cdecl DeleteScanResult(ScanResult scanResult);
 

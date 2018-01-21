@@ -8,6 +8,8 @@ MemSM::MemSM(HANDLE processHandle)
 	DWORD exitCode;
 	WinAPI::GetExitCodeProcess(processHandle, &exitCode);
 
+	//char reeeeee = ;// "ntdll.dll";
+
 	//Manually import some NTAPI functions. Pretty sick functions if you ask me
 	NtSuspendProcess = reinterpret_cast<decltype(NtSuspendProcess)>(WinAPI::GetProcAddress(WinAPI::GetModuleHandle("ntdll.dll"), "NtSuspendProcess"));
 	NtResumeProcess  = reinterpret_cast<decltype(NtResumeProcess)> (WinAPI::GetProcAddress(WinAPI::GetModuleHandle("ntdll.dll"), "NtResumeProcess"));
